@@ -1,84 +1,165 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import imgLogo from "./assets/image_logo.png";
+import img1 from "./assets/images/image-11.jpeg";
+import img2 from "./assets/images/image-1.webp";
+import img3 from "./assets/images/image-2.webp";
+import img4 from "./assets/images/image-3.webp";
+import img5 from "./assets/images/image-5.webp";
+import img6 from "./assets/images/image-6.webp";
+import img7 from "./assets/images/image-7.webp";
+import img8 from "./assets/images/image-8.webp";
+import img9 from "./assets/images/image-9.webp";
+import img10 from "./assets/images/image-10.jpeg";
+import img11 from "./assets/images/image-4.webp";
 
 const items = [
     {
         id: 1,
-        img: "/src/assets/images/image-1.webp",
+        img: img1,
+        order: 1
     },
     {
         id: 2,
-        img: "/src/assets/images/image-2.webp",
+        img: img2,
+        order: 2
     },
     {
         id: 3,
-        img: "/src/assets/images/image-3.webp",
+        img: img3,
+        order: 3
     },
     {
         id: 4,
-        img: "/src/assets/images/image-4.webp",
+        img: img4,
+        order: 4
     },
     {
         id: 5,
-        img: "/src/assets/images/image-5.webp",
+        img: img5,
+        order: 5
     },
     {
         id: 6,
-        img: "/src/assets/images/image-6.webp",
+        img: img6,
+        order: 6
     },
     {
         id: 7,
-        img: "/src/assets/images/image-7.webp",
+        img: img7,
+        order: 7
     },
     {
         id: 8,
-        img: "/src/assets/images/image-8.webp",
+        img: img8,
+        order: 8
     },
     {
         id: 9,
-        img: "/src/assets/images/image-9.webp",
+        img: img9,
+        order: 9
     },
     {
         id: 10,
-        img: "/src/assets/images/image-10.jpeg",
+        img: img10,
+        order: 10
     },
     {
         id: 11,
-        img: "/src/assets/images/image-11.jpeg",
+        img: img11,
+        order: 11
     },
 ]
 
 const App = () => {
+    const [selectedImages, setSelectedImages] = useState([]);
+    const [imageGallery, setImageGallery] = useState(items)
+    const dragImage = useRef(0);
+    const dragOverImage = useRef(0);
+
+    console.log(dragImage);
+    console.log(dragOverImage);
+
+
+    const handle_selected_Image = id =>{
+        const exist = selectedImages?.includes(id);
+
+        if(exist){
+            const unSelect = selectedImages?.filter(item=> item !== id);
+            setSelectedImages(unSelect)
+        }
+        else{
+            setSelectedImages([...selectedImages, id]);
+        }
+        // console.log(exist)
+    }
+
+    // delete the selected images 
+    const handleDelete = () =>{
+        const new_list = imageGallery.filter((image) => !selectedImages.includes(image.id))
+
+        setImageGallery(new_list)
+        setSelectedImages([])
+    }
+
+    // drag event 
+    const handleSort = ()=>{
+        const imageGalleryClone = [...imageGallery]
+        const temp = imageGalleryClone[dragImage.current]
+        imageGalleryClone[dragImage.current] = imageGalleryClone[dragOverImage.current]
+        imageGalleryClone[dragOverImage.current] = temp
+        setImageGallery(imageGalleryClone)
+
+    }
+
     return (
         <div className='w-10/12 mx-auto my-14 bg-white border rounded-lg shadow-lg'>
             {/* top part */}
             <div className='flex justify-between p-6 pb-5'>
-                <h4 className='text-2xl font-bold'>Gallery</h4>
-
-                <div className='sr-only'>
+                {
+                    selectedImages.length ?
+                <div className=''>
                     <input className='w-4 h-4' type="checkbox" checked readOnly />
-                    <label className='ml-2 font-bold text-xl'>3 File Selected</label>
+                    <label className='ml-2 font-bold text-xl'>{selectedImages?.length} File Selected</label>
                 </div>
+                :
+                <h4 className='text-2xl font-bold'>Gallery</h4>
+                }
 
-                <button className='border bg-orange-600 py-2 px-4'>Delete image</button>
+
+                <button onClick={handleDelete} className='border bg-orange-600 py-2 px-4'>Delete image</button>
             </div>
             <hr />
 
             {/* image component */}
             <div className='grid grid-cols-5 gap-6 p-6'>
                 {
-                    items.map((item, index)=>
-                        <div className={`${item.id == 1 ? "col-span-2 row-span-2" : "col-span-1"} border-2 rounded-lg overflow-hidden relative group`}>
+                    imageGallery?.map((item, index)=>
+
+                        <div
+                        key={item.id} 
+                        className={`first:col-span-2 first:row-span-2 border-2 rounded-lg overflow-hidden relative group`}
+                        draggable
+                        onDragStart={()=>dragImage.current = index}
+                        onDragEnter={()=> dragOverImage.current = index}
+                        onDragEnd={handleSort}
+                        onDragOver={(e)=> e.preventDefault()}
+                        
+                        >
                             <img src={item.img} alt="i" />
 
-                            <div className='w-full h-full bg-gray-700 p-6 absolute top-0 bg-opacity-0 group-hover:bg-opacity-50 duration-700'>
+                            <div
+                            
+                            className='w-full h-full bg-gray-700 p-6 absolute top-0 bg-opacity-0 group-hover:bg-opacity-50 duration-700 active:opacity-0'>
 
-                                <input type="checkbox" className='w-5 h-5' />
+                                <input
+                                onClick={()=>handle_selected_Image(item.id)}
+                                type="checkbox" 
+                                className='w-5 h-5' />
                             </div>
                         </div>
                     )
                 }
-                <div className='flex flex-col justify-center items-center border-2 border-dashed rounded-lg'>
+                <div className='flex flex-col justify-center items-center border-2 border-dashed rounded-lg min-h-[191px]'>
                     <img src={imgLogo} alt="l" className='w-fit'/>
                     <p>Add Images</p>
                 </div>

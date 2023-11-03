@@ -7,8 +7,6 @@ const Gallery = () => {
     const [selectedImages, setSelectedImages] = useState([]);
     const [imageGallery, setImageGallery] = useState(items);
 
-
-    console.log(selectedImages);
     
     const handleDelete = () =>{
         const new_list = imageGallery.filter((image) => !selectedImages.includes(image.id))

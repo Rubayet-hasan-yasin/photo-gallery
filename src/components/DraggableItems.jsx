@@ -38,20 +38,17 @@ const DraggableItems = ({ selectedImages, setSelectedImages, setImageGallery, im
     }
 
 
-    const dragEnter = (index) => {
-        setDragOverImage(index);
 
-    }
-    
+
 
     return (
-       
-            <div 
-            className='grid grid-cols-5 gap-6 p-6'>
-                {
-                    imageGallery?.map((item, index) =>
 
-                        <GalleryImage
+        <div
+            className='grid grid-cols-5 gap-6 p-6'>
+            {
+                imageGallery?.map((item, index) =>
+
+                    <GalleryImage
                         key={index}
                         item={item}
                         index={index}
@@ -62,16 +59,16 @@ const DraggableItems = ({ selectedImages, setSelectedImages, setImageGallery, im
                         handle_selected_Image={handle_selected_Image}
                         setDragImage={setDragImage}
                         handleSort={handleSort}
-                        dragEnter={dragEnter}
+                        setDragOverImage={setDragOverImage}
                         dragOverImage={dragOverImage}
-                        />
-                    )
-                }
-                <div className='flex flex-col justify-center items-center border-2 border-dashed rounded-lg min-h-[191px]'>
-                    <img src={imgLogo} alt="l" className='w-fit' />
-                    <p>Add Images</p>
-                </div>
+                    />
+                )
+            }
+            <div className='flex flex-col justify-center items-center border-2 border-dashed rounded-lg min-h-[191px]'>
+                <img src={imgLogo} alt="l" className='w-fit' />
+                <p>Add Images</p>
             </div>
+        </div>
     );
 };
 

@@ -17,7 +17,7 @@ const GalleryImage = ({ item, index, handle_selected_Image, setDragImage, handle
             onDragStart={() => setDragImage(index)}
             onDragEnter={() => dragEnter(index)}
             onDragEnd={handleSort}
-            onDragOver={(e) => e.preventDefault()}
+            onDragOver={(e) => {e.preventDefault(), console.log("over")}}
 
         >
             <img src={item?.img} alt="i" className={`${dragOverImage == index ? "opacity-0" : "opacity-100"}`} />

@@ -11,7 +11,7 @@ const GalleryImage = ({ item, index, handle_selected_Image, setDragImage, handle
 
     return (
         <div
-            className={`${dragOverImage == index ? "border-4" : "border-2"} first:col-span-2 first:row-span-2 first:max-h-[100%] rounded-lg overflow-hidden relative group h-full w-full max-h-[235px] sm:max-h-[188px] md:max-h-[150px] lg:max-h-[193px] xl:max-h-[226px] 2xl:max-h-[400px]`}
+            className={`${dragOverImage == index ? "border-4" : "border-2"} first:col-span-2 first:row-span-2 first:min-h-[100%] first:max-h-[482px] sm:first:max-h-[388px] md:first:max-h-[313px] lg:first:max-h-[399px] xl:first:max-h-[477px] 2xl:first:max-h-[660px] rounded-lg overflow-hidden relative group h-full w-full max-h-[235px] sm:max-h-[188px] md:max-h-[150px] lg:max-h-[193px] xl:max-h-[226px] 2xl:max-h-[400px]`}
             draggable
             onDragStart={() => setDragImage(index)}
             onDragEnter={() => dragEnter(index)}

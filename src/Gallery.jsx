@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { items } from './assets/data';
+import { items } from './data/data';
 import DraggableItems from './components/DraggableItems';
 
 const Gallery = () => {

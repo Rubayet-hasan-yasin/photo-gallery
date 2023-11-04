@@ -3,13 +3,16 @@ import imgLogo from "../assets/image_logo.png";
 import GalleryImage from "./GalleryImage";
 
 
+
+
 const DraggableItems = ({ selectedImages, setSelectedImages, setImageGallery, imageGallery }) => {
     const [dragImage, setDragImage] = useState(null);
     const [dragOverImage, setDragOverImage] = useState(null);
     // const dragImage = useRef(0);
     // const dragOverImage = useRef(0);
 
-    console.log(imageGallery.length);
+    // console.log(imageGallery);
+
 
     const handle_selected_Image = id => {
         const exist = selectedImages?.includes(id);
@@ -40,6 +43,19 @@ const DraggableItems = ({ selectedImages, setSelectedImages, setImageGallery, im
 
 
 
+    //add image
+    const addImage = image =>{
+        const url = URL.createObjectURL(image)
+
+        const newImage = {
+            id: imageGallery.length +1,
+            img: url
+        }
+
+        setImageGallery([...imageGallery, newImage])
+    }
+
+
 
 
     return (
@@ -65,9 +81,22 @@ const DraggableItems = ({ selectedImages, setSelectedImages, setImageGallery, im
                     />
                 )
             }
-            <div className={`flex flex-col justify-center items-center border-2 border-dashed rounded-lg min-h-[105px] sm:min-h-[150px] md:min-h-[105px] lg:min-h-[150px] xl:min-h-[180px]`}>
-                <img src={imgLogo} alt="l" className='w-fit' />
-                <p>Add Images</p>
+            <div className={`border-2 border-dashed rounded-lg min-h-[105px] sm:min-h-[150px] md:min-h-[105px] lg:min-h-[150px] xl:min-h-[180px]`}>
+                <label className="">
+                    <input
+                    onChange={(e)=> addImage(e.target.files[0])}
+                        type="file"
+                        name="add_photo"
+                        accept="image/*"
+                        id=""
+                        className="sr-only"
+                    />
+
+                    <div className="border h-full flex flex-col justify-center items-center">
+                        <img src={imgLogo} alt="l" className='w-fit' />
+                        <p>Add Images</p>
+                    </div>
+                </label>
             </div>
         </div>
     );

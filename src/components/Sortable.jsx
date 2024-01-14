@@ -29,7 +29,7 @@ const Sortable = ({ item, setSelectedImages , selectedImages }) => {
         else {
             setSelectedImages([...selectedImages, id]);
         }
-        // console.log(exist)
+        console.log(selectedImages)
     }
 
 
@@ -47,7 +47,9 @@ const Sortable = ({ item, setSelectedImages , selectedImages }) => {
             <div
                 className='w-full h-full bg-gray-700 p-6 absolute top-0 bg-opacity-0 group-hover:bg-opacity-50 duration-700 active:bg-opacity-0'>
 
+
                 <input
+                id={`check${item.id}`}
                     onClick={() => handle_selected_Image(item.id)}
                     type="checkbox"
                     className='w-5 h-5' />

@@ -9,19 +9,40 @@ const DraggableItems = ({ selectedImages, setSelectedImages, setImageGallery, im
 
 
 
-    
+    // const onDragEnd = (event)=>{
+    //     const imageGalleryClone = [...imageGallery]
+    //     const temp = imageGalleryClone[dragImage.current]
+    //     imageGalleryClone[dragImage.current] = imageGalleryClone[dragOverImage.current]
+    //     imageGalleryClone[dragOverImage.current] = temp
+    //     setImageGallery(imageGalleryClone)
+    //     // event.target.classList.remove("") 
+    //     console.log(event.target.classList)
+
+    // }
 
 
     const onDragEnd = event => {
-        if (event.over && event.active.id !== event.over.id) {
-            const oldIndex = imageGallery.findIndex((item) => item.id === event.active.id);
-            const newIndex = imageGallery.findIndex((item) => item.id === event.over.id);
-      
-            if (oldIndex !== -1 && newIndex !== -1) {
-              const newImageGallery = arrayMove(imageGallery, oldIndex, newIndex);
-              setImageGallery(newImageGallery);
-            }
-          }
+        const { active, over } = event;
+        if (active.id === over.id) {
+            return;
+        }
+
+        const oldIndex = imageGallery.findIndex((image) => image.id === active.id);
+        const newIndex = imageGallery.findIndex((image) => image.id === over.id);
+
+        const imageGalleryClone = [...imageGallery]
+        const temp = imageGalleryClone[oldIndex]
+        imageGalleryClone[oldIndex] = imageGalleryClone[newIndex]
+        imageGalleryClone[newIndex] = temp
+        setImageGallery(imageGalleryClone)
+
+
+        // setImageGallery((imageGallery) => {
+        //     const oldIndex = imageGallery.findIndex((image) => image.id === active.id);
+        //     const newIndex = imageGallery.findIndex((image) => image.id === over.id);
+        //     console.log(imageGallery)
+        //     return arrayMove(imageGallery, newIndex, oldIndex);
+        // });
     }
 
 
@@ -33,7 +54,7 @@ const DraggableItems = ({ selectedImages, setSelectedImages, setImageGallery, im
                     {
                         imageGallery?.map((item, index) =>
 
-                            <Sortable item={item} key={item.id} selectedImages={selectedImages} setSelectedImages={setSelectedImages}/>
+                            <Sortable item={item} key={item.id} selectedImages={selectedImages} setSelectedImages={setSelectedImages} />
                         )
                     }
                 </SortableContext>
